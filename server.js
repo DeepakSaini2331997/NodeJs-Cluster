@@ -9,14 +9,14 @@ const port = process.env.PORT || 3000
 //console.log(cluster," my cluster")
 
 if(cluster.isMaster){
-    console.log('cluter true')
+    //console.log('cluter true')
     const numsCpu = os.cpus().length
     for(let i=0;i<numsCpu;i++){
-        cluster.fork()
-        //console.log(`for loop ${process.pid}`)
+        cluster.fork() //Creates a new worker, from a master
     }
-    cluster.on('exit',(Worker)=>{
-        console.log(`my worker ${Worker.process.pid}`)
+    cluster.on('exit',(worker)=>{
+        //Returns the current worker object
+        console.log(`my worker ${worker.process.pid}`)
     })
 }else{
     app.listen(port,()=>{
